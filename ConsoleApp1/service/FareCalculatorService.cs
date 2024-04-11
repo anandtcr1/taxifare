@@ -11,20 +11,23 @@ namespace ConsoleApp1.service
     public class FareCalculatorService
     {
         List<TaxiFareBand> taxiFareBandList = new List<TaxiFareBand>();
+        int totalCalculatedDistance = 0;
         public double CalculateFare(int distance)
         {
             double fare = 0;
-
+        
             foreach (var band in taxiFareBandList.OrderBy(x => x.BandOrder).ToList())
             {
                 if (distance == 0)
                 {
                     break;
                 }
+        
                 var deltaDistance = 0;
                 if (distance >= band.MilesEnd)
                 {
-                    deltaDistance = band.MilesEnd;
+                    deltaDistance = band.MilesEnd - totalCalculatedDistance;
+                    totalCalculatedDistance = totalCalculatedDistance + deltaDistance;
                 }
                 else
                 {
@@ -33,7 +36,7 @@ namespace ConsoleApp1.service
                 fare += deltaDistance * band.Fare;
                 distance = distance - deltaDistance;
             }
-
+        
             return fare;
         }
 
