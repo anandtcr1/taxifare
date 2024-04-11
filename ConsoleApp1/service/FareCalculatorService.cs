@@ -11,9 +11,9 @@ namespace ConsoleApp1.service
     public class FareCalculatorService
     {
         List<TaxiFareBand> taxiFareBandList = new List<TaxiFareBand>();
-        int totalCalculatedDistance = 0;
         public double CalculateFare(int distance)
         {
+            int totalCalculatedDistance = 0;
             double fare = 0;
         
             foreach (var band in taxiFareBandList.OrderBy(x => x.BandOrder).ToList())
